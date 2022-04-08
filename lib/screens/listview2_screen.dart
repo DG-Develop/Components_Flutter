@@ -16,14 +16,17 @@ class ListView2Screen extends StatelessWidget {
         title: const Text('Lisview Tipo 2'),
         elevation: 0,
         backgroundColor: Colors.indigo,
-        centerTitle: true,   
+        centerTitle: true,
       ),
       body: ListView.separated(
         itemCount: options.length,
         itemBuilder: (context, index) => ListTile(
             title: Text(options[index]),
-            trailing: const Icon(Icons.arrow_forward_ios_outlined, color: Colors.indigo,),
-            onTap: (){
+            trailing: const Icon(
+              Icons.arrow_forward_ios_outlined,
+              color: Colors.indigo,
+            ),
+            onTap: () {
               final game = options[index];
               print(game);
             }),
