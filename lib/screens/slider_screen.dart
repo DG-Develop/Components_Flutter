@@ -10,6 +10,7 @@ class SliderScreen extends StatefulWidget {
 
 class _SliderScreenState extends State<SliderScreen> {
   double _sliderValue = 100;
+  bool _sliderEnable = true;
 
   @override
   Widget build(BuildContext context) {
@@ -17,34 +18,69 @@ class _SliderScreenState extends State<SliderScreen> {
       appBar: AppBar(
         title: Text('Sliders & Checks'),
       ),
-      body: SingleChildScrollView(
-        child: Column(children: [
-          //Algunos widgets tienen la función adaptativa para que se acoplen
-          // al sistema operativo en uso
-          Slider.adaptive(
-            activeColor: AppTheme.primary,
-            // divisions: 10,
+      body: Column(children: [
+        //Algunos widgets tienen la función adaptativa para que se acoplen
+        // al sistema operativo en uso
+        Slider.adaptive(
+          activeColor: AppTheme.primary,
+          // divisions: 10,
 
-            value: _sliderValue,
+          value: _sliderValue,
+          onChanged: _sliderEnable
+              ? (value) {
+                  print(value);
+                  _sliderValue = value;
+                  setState(() {});
+                }
+              : null,
+          min: 50,
+          max: 400,
+        ),
+        Checkbox(
+            value: _sliderEnable,
             onChanged: (value) {
-              print(value);
-              _sliderValue = value;
+              _sliderEnable = value ?? true;
               setState(() {});
-            },
-            min: 50,
-            max: 400,
+            }),
+        CheckboxListTile(
+          activeColor: AppTheme.primary,
+          value: _sliderEnable,
+          title: const Text('Habilitar Slider'),
+          onChanged: (value) {
+            setState(() {
+              _sliderEnable = value ?? true;
+            });
+          },
+        ),
+        Switch(
+            value: _sliderEnable,
+            onChanged: (value) {
+              setState(() {
+                _sliderEnable = value;
+              });
+            }),
+        SwitchListTile.adaptive(
+          activeColor: AppTheme.primary,
+          value: _sliderEnable,
+          title: const Text('Habilitar Slider'),
+          onChanged: (value) {
+            setState(() {
+              _sliderEnable = value;
+            });
+          },
+        ),
+        const AboutListTile(),
+        Expanded(
+          child: SingleChildScrollView(
+            child: Image(
+              image: const NetworkImage(
+                  'http://pngimg.com/uploads/batman/batman_PNG51.png'),
+              fit: BoxFit.contain,
+              width: _sliderValue,
+            ),
           ),
-          Image(
-            image: const NetworkImage(
-                'https://w7.pngwing.com/pngs/22/790/png-transparent-batman-family-catwoman-robin-comics-batman-heroes-superhero-comic-book.png'),
-            fit: BoxFit.contain,
-            width: _sliderValue,
-          ),
-          const SizedBox(
-            height: 50,
-          )
-        ]),
-      ),
+        ),
+      ]),
     );
   }
 }
